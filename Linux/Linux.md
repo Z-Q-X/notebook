@@ -1,6 +1,6 @@
 # Linux云计算
 
-[toc]
+[TOC]
 
 ## 走进Linux世界
 
@@ -240,6 +240,36 @@ vi/vim：文件编辑器
 
 
 ```
-chmod  u=rwx   a.txt：更改文件或目录的权限
+chmod：更改文件或目录的权限
+	语法：chmod 对象(u/g/o/a)赋值符(+/-/=)权限类型(r/w/x) 文件/目录
+	数字语法：chmod 777 file
 	-R: 递归，一般针对目录进行操作
+chown：可以更改属主和属组
+	chown 用户名.组名 文件
+	chown 用户名 文件
+	chown .组名 文件
+	-R: 递归，一般针对目录进行操作
+chgrp：更改属组
+	chgrp 组名 文件
+	-R: 递归，一般针对目录进行操作
+```
+
+### 基本权限ACL
+
+- ACL：access control list：访问控制列表
+  - 限制用户对文件的访问
+  - ACL是UGO的补充，或者说是加强版
+- ACL和UGO的区别
+  - ACL文件权限管理：设置不同用户，不同的基本权限(rwx)。对象数量不同
+  - UGO设置基本权限：只能一个用户，一个组和其他人
+
+```
+getfacl：查看文件的ACL权限信息
+setfacl：设置ACL
+	-m：设置权限信息
+	-d：将文件上的ACL权限恢复到默认(setfacl -d file)
+	-x：删除用户在文件上的权限(setfacl -x u:user file)
+	-b：删除文件所有权限信息(setfacl -b file)
+	语法：命令 设置 对象:对象名:权限 文件或目录
+	语法：setfacl -m u:user:rwx /tmp/file1
 ```
