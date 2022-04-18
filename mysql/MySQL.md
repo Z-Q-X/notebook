@@ -330,9 +330,46 @@ REVOKE 权限列表 ON 数据库名.表名 FROM '用户名'@'主机名';
 
 - 分类
   ![](./img/11.png)
+- 案例
+  ![](./img/12.png)
+  ```sql
+  -- 创建表
+  CREATE TABLE user(
+    id INT PRIMARY KEY AUTO_INCREMENT COMMENT '主键',
+    name VARCHAR(10) NOT NULL UNIQUE COMMENT '姓名',
+    age INT CHECK(age>0 && age<=120) COMMENT '年龄',
+    seatus CHAR(1) DEFAULT '1' COMMENT '状态',
+    gender char(1) COMMENT '性别'
+  ) COMMENT '用户表';
+  -- 插入数据
+  INSERT INTO user
+    (name,age,seatus,gender) 
+  VALUES 
+    ('Ton1',19,'1','男'), 
+    ('Ton2',34,'0','男');
+  ```
 
-
-
+- 外键约束
+  - 外键用来让两张表的数据之间建立链接，从而保证数据的一致性和完整性
+  ![](./img/13.png)
+  - 目前上述的两张表，在数据库层面，并未建立外键关联，所以是无法保证数据的一致性和完整性的
+  - 添加外键
+    ```sql
+    CREATE TABLE 表名(
+      字段名 数据类型
+      [CONSTRAINT] [外键名称] FOREIGN KEY(外键字段名) REFERENCES 主表(主表列名)
+    );
+    ALTER TABLE 表名 ADD CONSTRAINT 外键名称 FOREIGN KEY(外键字段名) REFERENCES 主表(主表列名);
+    ```
+  - 删除外键
+    ```sql
+    ALTER TABLE 表名 DROP FOREIGN KEY 外键名称;
+    ```
+- 外键的删除/更新行为
+  ![](./img/14.png)
+  ```sql
+  ALTER TABLE 表名 ADD CONSTRAINT 外键名称 FOREIGN KEY(外键字段) REFERENCES 主表名(主表字段名) ON UPDATE ON DELETE CASCADE;
+  ```
 
 ### 多表查询
 
